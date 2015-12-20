@@ -70,3 +70,39 @@ void SDL_Snake::addSnakeNode(SDL_SnakeNode snakeNode)
 {
 	snake.push_back(snakeNode);
 }
+
+void SDL_Snake::setSnakeLive()
+{
+	ifLive = true;
+}
+
+void SDL_Snake::setSnakeDead()
+{
+	ifLive = false;
+}
+
+bool SDL_Snake::checkSnakeCollide()
+{
+	for (int i = 1; i != snake.size(); i++)
+	{
+		if (snake[i].getPosX() == snake[0].getPosX() && snake[i].getPosY() == snake[0].getPosY())
+			return false;
+	}
+	switch (direction)
+	{
+	case 1:if (snake[0].getPosY() <= 10)
+		return false; break;
+	case 2:if (snake[0].getPosY() >= 460)
+		return false; break;
+	case 3:if (snake[0].getPosX() <= 10)
+		return false; break;
+	case 4:if (snake[0].getPosX() >= 620)
+		return false; break;
+	}
+	return true;
+}
+
+bool SDL_Snake::ifSnakeLife()
+{
+	return ifLive;
+}

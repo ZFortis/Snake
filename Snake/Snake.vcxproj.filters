@@ -36,6 +36,9 @@
     <ClCompile Include="SDL_Game.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="SDL_Map.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDL_Sprite.h">
@@ -54,6 +57,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="SDL_Game.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL_Map.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

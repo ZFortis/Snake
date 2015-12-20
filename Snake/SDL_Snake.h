@@ -14,8 +14,13 @@ public:
 	void addSnakeNode(SDL_SnakeNode snakeNode);
 	void drawSnake(SDL_Renderer*renderer);
 	void setDirection();
+	void setSnakeLive();
+	void setSnakeDead();
+	bool checkSnakeCollide();
+	bool ifSnakeLife();
 
 protected:
+	bool ifLive;
 	int direction;
 	int oldDirection;
 	vector<SDL_SnakeNode> snake;

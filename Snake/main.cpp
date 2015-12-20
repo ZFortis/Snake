@@ -22,6 +22,7 @@
 /*620*460*/
 const int SCRRN_WIDTH = 640;
 const int SCREEN_HIGHT = 480;
+const int SNAKE_NODE_SIZE = 10;
 int main(int argc, char* args[])
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -32,11 +33,11 @@ int main(int argc, char* args[])
 	SDL_Event e;
 	Uint32 start;
 	sNode.loadImage(renderer,"snakeHead.png");
-	sNode.setSprite(1, 10, 10);
+	sNode.setSprite(1, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);
 	sNode.setSpritePosition(0, 50);
 	snake.setDirection();
 	snake.addSnakeNode(sNode);
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		sNode.setSpritePosition(0, 50 - 10 * (i + 1));
 		snake.addSnakeNode(sNode);
