@@ -3,8 +3,9 @@
 #include"SDL_mixer.h"
 #include"SDL_image.h"
 #include"SDL_Sprite.h"
-#include"SDL_Snake.h"
-#include"SDL_SnakeNode.h"
+#include"Sk_Snake.h"
+#include"Sk_Food.h"
+#include"Sk_SnakeNode.h"
 #include<iostream>
 #include<sstream>
 #include<string>
@@ -20,28 +21,33 @@
 π¶ƒ‹5£∫Ã∞≥‘…ﬂ≈ˆµΩ±ﬂ«Ωª·À¿£¨œ‘ æ”Œœ∑ ß∞‹£ª
 */
 /*620*460*/
-const int SCRRN_WIDTH = 640;
+const int SCREEN_WIDTH = 640;
 const int SCREEN_HIGHT = 480;
 const int SNAKE_NODE_SIZE = 10;
 int main(int argc, char* args[])
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	SDL_Window *window = SDL_CreateWindow("Snake", 500, 100, SCRRN_WIDTH, SCREEN_HIGHT, SDL_WINDOW_SHOWN);
+	SDL_Window *window = SDL_CreateWindow("Snake", 500, 100, SCREEN_WIDTH, SCREEN_HIGHT, SDL_WINDOW_SHOWN);
 	SDL_Renderer*renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	SDL_Snake snake;
-	SDL_SnakeNode sNode;
+	Sk_Snake snake;
+	Sk_SnakeNode sNode;
+	Sk_Food food;
 	SDL_Event e;
 	Uint32 start;
-	sNode.loadImage(renderer,"snakeHead.png");
-	sNode.setSprite(1, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);
-	sNode.setSpritePosition(0, 50);
+	food.loadImage(renderer, "./res/nodeSprite.png");
+	food.setSprite(4, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);
+	food.setRandomPosition(2 * SNAKE_NODE_SIZE, 2 * SNAKE_NODE_SIZE,SCREEN_WIDTH - 10, SCREEN_HIGHT - 20);
+	food.setRandomColor();
+	food.creatFood();
+
+	sNode.loadImage(renderer,"./res/nodeSprite.png");
+	sNode.setRandomColor();
+	sNode.setSprite(4, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);
+	sNode.setSpritePosition(SCREEN_WIDTH / 2 - SNAKE_NODE_SIZE, SCREEN_HIGHT / 2 - SNAKE_NODE_SIZE);
 	snake.setDirection();
 	snake.addSnakeNode(sNode);
-	for (int i = 0; i < 10; i++)
-	{
-		sNode.setSpritePosition(0, 50 - 10 * (i + 1));
-		snake.addSnakeNode(sNode);
-	}
+	snake.setSnakeLive();
+
 	bool quite = false;
 	start = SDL_GetTicks();
 	while (!quite)
@@ -51,19 +57,68 @@ int main(int argc, char* args[])
 			if (e.type == SDL_QUIT)
 				quite = true;
 
+			/*if (e.type == SDL_KEYDOWN)
+			{
+			if (snake.snake.size() == 3)
+			{
+			if (e.key.keysym.sym == SDLK_RIGHT)
+			{
 			snake.controlSnake(e);
+			break;
+			}
+			}*/
+			if (e.type == SDL_KEYDOWN)
+			{
+				switch (e.key.keysym.sym)
+				{
+				case SDLK_UP : snake.controlSnake(1); break;
+				case SDLK_DOWN: snake.controlSnake(2); break;
+				case SDLK_LEFT: snake.controlSnake(3); break;
+				case SDLK_RIGHT: snake.controlSnake(4); break;
+				default:
+					break;
+				}
+				break;
+			}
+			//break;
 		}
+	
 		if (quite)
 			continue;
 
 		SDL_RenderClear(renderer);
-		snake.drawSnake(renderer);
-		if (SDL_GetTicks() - start >= 100)
+		if (food.ifFoodBe())
+			food.textureRendererColor(renderer);
+			//food.textureRenderer(renderer);
+		if (food.getPosX() == snake.getSnakeHeadX() && food.getPosY() == snake.getSnakeHeadY())
+		{
+			food.eatFood();
+			snake.addSnakeNode(sNode,food.getColorFlag());
+		}
+		if (!food.ifFoodBe())
+		{
+			food.setRandomPosition(2 * SNAKE_NODE_SIZE, 2 * SNAKE_NODE_SIZE, SCREEN_WIDTH - 2 * SNAKE_NODE_SIZE, SCREEN_HIGHT - 2 * SNAKE_NODE_SIZE);
+			food.setRandomColor();
+			food.creatFood();
+		}
+		snake.drawColorSnake(renderer);
+		if (SDL_GetTicks() - start >= 150)
 		{
 			snake.moveSnake();
 			start = SDL_GetTicks();
 		}
 		SDL_RenderPresent(renderer);
+		if (!snake.checkSnakeCollide())
+			if (!snake.checkSnakeCollide())
+				snake.setSnakeDead();
+		if (!snake.ifSnakeLife())
+		{
+			snake.clearSnake();
+			sNode.setSpritePosition(SCREEN_WIDTH / 2 - SNAKE_NODE_SIZE, SCREEN_HIGHT / 2 - SNAKE_NODE_SIZE);
+			snake.setDirection();
+			snake.addSnakeNode(sNode);
+			snake.setSnakeLive();
+		}
 	}
 	
 	SDL_DestroyRenderer(renderer);

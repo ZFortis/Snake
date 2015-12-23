@@ -24,19 +24,19 @@
     <ClCompile Include="SDL_EffectSound.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="SDL_Snake.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="SDL_SnakeNode.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="SDL_Food.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="SDL_Game.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="SDL_Map.cpp">
+    <ClCompile Include="Sk_Food.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Sk_Map.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Sk_Snake.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Sk_SnakeNode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,19 +47,19 @@
     <ClInclude Include="SDL_EffectSound.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SDL_Snake.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SDL_SnakeNode.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SDL_Food.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="SDL_Game.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="SDL_Map.h">
+    <ClInclude Include="Sk_Food.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Sk_Map.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Sk_Snake.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Sk_SnakeNode.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
