@@ -43,6 +43,12 @@ public:
 	int getSnakeHeadX();
 	//得到蛇头的y坐标
 	int getSnakeHeadY();
+	//设置蛇头的x坐标
+	void setSnakeHeadX(int x);
+	//设置蛇头的y坐标
+	void setSnakeHeadY(int y);
+	//设置蛇头坐标
+	void setSnakeHeadPoisition(int x, int y);
 
 protected:
 	//蛇的生死

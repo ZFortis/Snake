@@ -4,6 +4,7 @@
 #include"SDL_image.h"
 #include"SDL_Sprite.h"
 #include"Sk_Snake.h"
+#include "Sk_BlackHole.h"
 #include"Sk_Food.h"
 #include"Sk_SnakeNode.h"
 #include<iostream>
@@ -32,8 +33,11 @@ int main(int argc, char* args[])
 	Sk_Snake snake;
 	Sk_SnakeNode sNode;
 	Sk_Food food;
+	SDL_Sprite bg;
 	SDL_Event e;
 	Uint32 start;
+	Sk_BlackHole hole_1, hole_2;
+	int score;
 	food.loadImage(renderer, "./res/nodeSprite.png");
 	food.setSprite(4, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);
 	food.setRandomPosition(2 * SNAKE_NODE_SIZE, 2 * SNAKE_NODE_SIZE,SCREEN_WIDTH - 10, SCREEN_HIGHT - 20);
@@ -47,6 +51,17 @@ int main(int argc, char* args[])
 	snake.setDirection();
 	snake.addSnakeNode(sNode);
 	snake.setSnakeLive();
+
+	hole_1.loadImage(renderer, "./res/blackhole.png");
+	hole_2.loadImage(renderer, "./res/blackhole.png");
+	hole_1.setSprite(1, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);	
+	hole_2.setSprite(1, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);
+
+	hole_1.setRandomPosition(SNAKE_NODE_SIZE, SNAKE_NODE_SIZE, (SCREEN_WIDTH - SNAKE_NODE_SIZE) / 2 - SNAKE_NODE_SIZE, (SCREEN_HIGHT - SNAKE_NODE_SIZE) / 2 - SNAKE_NODE_SIZE);
+	hole_2.setRandomPosition((SCREEN_WIDTH - SNAKE_NODE_SIZE) / 2, (SCREEN_HIGHT - SNAKE_NODE_SIZE) / 2, SCREEN_WIDTH - SNAKE_NODE_SIZE, SCREEN_HIGHT - SNAKE_NODE_SIZE);
+
+	bg.loadImage(renderer, "./res/background.png");
+	bg.setSprite(1, SCREEN_WIDTH, SCREEN_WIDTH);
 
 	bool quite = false;
 	start = SDL_GetTicks();
@@ -87,6 +102,9 @@ int main(int argc, char* args[])
 			continue;
 
 		SDL_RenderClear(renderer);
+		bg.textureRenderer(renderer);
+		hole_1.textureRenderer(renderer);
+		hole_2.textureRenderer(renderer);
 		if (food.ifFoodBe())
 			food.textureRendererColor(renderer);
 			//food.textureRenderer(renderer);
@@ -102,10 +120,20 @@ int main(int argc, char* args[])
 			food.creatFood();
 		}
 		snake.drawColorSnake(renderer);
+
 		if (SDL_GetTicks() - start >= 150)
 		{
 			snake.moveSnake();
 			start = SDL_GetTicks();
+			if (hole_1.getPosX() == snake.getSnakeHeadX() && hole_1.getPosY() == snake.getSnakeHeadY())
+			{
+				snake.setSnakeHeadPoisition(hole_2.getPosX(), hole_2.getPosY());
+			}
+
+			else 	if (hole_2.getPosX() == snake.getSnakeHeadX() && hole_2.getPosY() == snake.getSnakeHeadY())
+			{
+				snake.setSnakeHeadPoisition(hole_1.getPosX(), hole_1.getPosY());
+			}
 		}
 		SDL_RenderPresent(renderer);
 		if (!snake.checkSnakeCollide())

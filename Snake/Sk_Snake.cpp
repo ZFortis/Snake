@@ -140,13 +140,13 @@ bool Sk_Snake::checkSnakeCollide()
 	}
 	switch (direction)
 	{
-	case 1:if (snake[0].getPosY() <= 10)
+	case 1:if (snake[0].getPosY() < 10)
 		return false; break;
-	case 2:if (snake[0].getPosY() >= 460)
+	case 2:if (snake[0].getPosY() > 460)
 		return false; break;
-	case 3:if (snake[0].getPosX() <= 10)
+	case 3:if (snake[0].getPosX() < 10)
 		return false; break;
-	case 4:if (snake[0].getPosX() >= 620)
+	case 4:if (snake[0].getPosX() > 620)
 		return false; break;
 	}
 	return true;
@@ -180,4 +180,19 @@ void Sk_Snake::addSnakeNode(Sk_SnakeNode snakeNode, int colorFlag)
 		default:break;
 	}
 	snake.push_back(snakeNode);
+}
+
+void Sk_Snake::setSnakeHeadX(int x)
+{
+	snake[0].setSpritePosition(x, snake[0].getPosY());
+}
+
+void Sk_Snake::setSnakeHeadY(int y)
+{
+	snake[0].setSpritePosition(snake[0].getPosX(),y);
+}
+
+void Sk_Snake::setSnakeHeadPoisition(int x, int y)
+{
+	snake[0].setSpritePosition(x, y);
 }

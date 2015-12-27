@@ -39,6 +39,9 @@
     <ClCompile Include="Sk_SnakeNode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Sk_BlackHole.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDL_Sprite.h">
@@ -60,6 +63,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Sk_SnakeNode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Sk_BlackHole.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

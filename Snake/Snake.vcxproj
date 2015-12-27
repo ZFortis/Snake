@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SDL_EffectSound.cpp" />
+    <ClCompile Include="Sk_BlackHole.cpp" />
     <ClCompile Include="Sk_Food.cpp" />
     <ClCompile Include="SDL_Game.cpp" />
     <ClCompile Include="Sk_Map.cpp" />
@@ -95,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDL_EffectSound.h" />
+    <ClInclude Include="Sk_BlackHole.h" />
     <ClInclude Include="Sk_Food.h" />
     <ClInclude Include="SDL_Game.h" />
     <ClInclude Include="Sk_Map.h" />
