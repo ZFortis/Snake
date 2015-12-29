@@ -89,20 +89,20 @@
     <ClCompile Include="Sk_BlackHole.cpp" />
     <ClCompile Include="Sk_Food.cpp" />
     <ClCompile Include="SDL_Game.cpp" />
-    <ClCompile Include="Sk_Map.cpp" />
     <ClCompile Include="Sk_Snake.cpp" />
     <ClCompile Include="Sk_SnakeNode.cpp" />
     <ClCompile Include="SDL_Sprite.cpp" />
+    <ClCompile Include="Sk_Word.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDL_EffectSound.h" />
     <ClInclude Include="Sk_BlackHole.h" />
     <ClInclude Include="Sk_Food.h" />
     <ClInclude Include="SDL_Game.h" />
-    <ClInclude Include="Sk_Map.h" />
     <ClInclude Include="Sk_Snake.h" />
     <ClInclude Include="Sk_SnakeNode.h" />
     <ClInclude Include="SDL_Sprite.h" />
+    <ClInclude Include="Sk_Word.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

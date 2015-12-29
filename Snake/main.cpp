@@ -7,6 +7,7 @@
 #include "Sk_BlackHole.h"
 #include"Sk_Food.h"
 #include"Sk_SnakeNode.h"
+#include"Sk_Word.h"
 #include<iostream>
 #include<sstream>
 #include<string>
@@ -28,6 +29,7 @@ const int SNAKE_NODE_SIZE = 10;
 int main(int argc, char* args[])
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
+	TTF_Init();
 	SDL_Window *window = SDL_CreateWindow("Snake", 500, 100, SCREEN_WIDTH, SCREEN_HIGHT, SDL_WINDOW_SHOWN);
 	SDL_Renderer*renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	Sk_Snake snake;
@@ -37,7 +39,13 @@ int main(int argc, char* args[])
 	SDL_Event e;
 	Uint32 start;
 	Sk_BlackHole hole_1, hole_2;
-	int score;
+	int score = 0;
+	Sk_Word word;
+	string text;
+	int refershtime = 150;
+	int level = 1;
+	word.loadFont("./res/consola.ttf", 50);
+
 	food.loadImage(renderer, "./res/nodeSprite.png");
 	food.setSprite(4, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);
 	food.setRandomPosition(2 * SNAKE_NODE_SIZE, 2 * SNAKE_NODE_SIZE,SCREEN_WIDTH - 10, SCREEN_HIGHT - 20);
@@ -62,9 +70,23 @@ int main(int argc, char* args[])
 
 	bg.loadImage(renderer, "./res/background.png");
 	bg.setSprite(1, SCREEN_WIDTH, SCREEN_WIDTH);
-
+	
 	bool quite = false;
 	start = SDL_GetTicks();
+	string no = word.changeIntToString(level);
+	word.setFontSize(50, 50);
+	word.renderText(renderer, no, 50);
+	SDL_RenderClear(renderer);
+	word.setFontPosition((SCREEN_WIDTH - word.getWidth()) / 2, (SCREEN_HIGHT - word.getHight()) / 2);
+	word.textureRenderer(renderer);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(2000);
+
+	text = word.changeIntToString(score);
+	text = "Score: " + text;
+	word.renderText(renderer, text, 50);
+	word.setFontPosition(25, 0);
+	word.setFontSize(100, 50);
 	while (!quite)
 	{
 		while (SDL_PollEvent(&e))
@@ -112,6 +134,10 @@ int main(int argc, char* args[])
 		{
 			food.eatFood();
 			snake.addSnakeNode(sNode,food.getColorFlag());
+			score += 10;
+			text = word.changeIntToString(score);
+			text = "Score:  " + text;
+			word.renderText(renderer, text, 50);
 		}
 		if (!food.ifFoodBe())
 		{
@@ -135,7 +161,10 @@ int main(int argc, char* args[])
 				snake.setSnakeHeadPoisition(hole_1.getPosX(), hole_1.getPosY());
 			}
 		}
+
+		word.textureRenderer(renderer);
 		SDL_RenderPresent(renderer);
+
 		if (!snake.checkSnakeCollide())
 			if (!snake.checkSnakeCollide())
 				snake.setSnakeDead();
@@ -146,6 +175,34 @@ int main(int argc, char* args[])
 			snake.setDirection();
 			snake.addSnakeNode(sNode);
 			snake.setSnakeLive();
+			score = 0;
+			text = word.changeIntToString(score);
+			text = "Score:  " + text;
+			word.renderText(renderer, text, 50);
+		}
+		if (score % 100 == 0 && score != 0)
+		{
+			snake.clearSnake();
+			sNode.setSpritePosition(SCREEN_WIDTH / 2 - SNAKE_NODE_SIZE, SCREEN_HIGHT / 2 - SNAKE_NODE_SIZE);
+			snake.setDirection();
+			snake.addSnakeNode(sNode);
+			snake.setSnakeLive();
+			refershtime += 50;
+			word.setFontSize(50, 50);
+			level++;
+			no = word.changeIntToString(level);
+			word.renderText(renderer, no, 50);
+			SDL_RenderClear(renderer);
+			word.setFontPosition((SCREEN_WIDTH - word.getWidth()) / 2, (SCREEN_HIGHT - word.getHight()) / 2);
+			word.textureRenderer(renderer);
+			SDL_RenderPresent(renderer);			
+			SDL_Delay(2000);
+			score = 0;
+			text = word.changeIntToString(score);
+			text = "Score: " + text;
+			word.renderText(renderer, text, 50);
+			word.setFontPosition(25, 0);
+			word.setFontSize(100, 50);
 		}
 	}
 	
