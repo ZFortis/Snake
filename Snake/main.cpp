@@ -65,14 +65,13 @@ int main(int argc, char* args[])
 	hole_1.setSprite(1, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);	
 	hole_2.setSprite(1, SNAKE_NODE_SIZE, SNAKE_NODE_SIZE);
 
-	hole_1.setRandomPosition(SNAKE_NODE_SIZE, SNAKE_NODE_SIZE, (SCREEN_WIDTH - SNAKE_NODE_SIZE) / 2 - SNAKE_NODE_SIZE, (SCREEN_HIGHT - SNAKE_NODE_SIZE) / 2 - SNAKE_NODE_SIZE);
-	hole_2.setRandomPosition((SCREEN_WIDTH - SNAKE_NODE_SIZE) / 2, (SCREEN_HIGHT - SNAKE_NODE_SIZE) / 2, SCREEN_WIDTH - SNAKE_NODE_SIZE, SCREEN_HIGHT - SNAKE_NODE_SIZE);
+	hole_1.setRandomPosition(SNAKE_NODE_SIZE, SNAKE_NODE_SIZE, SCREEN_WIDTH / 2 - SNAKE_NODE_SIZE, SCREEN_HIGHT / 2 - SNAKE_NODE_SIZE);
+	hole_2.setRandomPosition(SCREEN_WIDTH / 2, SCREEN_HIGHT / 2, SCREEN_WIDTH - SNAKE_NODE_SIZE, SCREEN_HIGHT - SNAKE_NODE_SIZE);
 
 	bg.loadImage(renderer, "./res/background.png");
 	bg.setSprite(1, SCREEN_WIDTH, SCREEN_WIDTH);
 	
 	bool quite = false;
-	start = SDL_GetTicks();
 	string no = word.changeIntToString(level);
 	word.setFontSize(50, 50);
 	word.renderText(renderer, no, 50);
@@ -87,6 +86,7 @@ int main(int argc, char* args[])
 	word.renderText(renderer, text, 50);
 	word.setFontPosition(25, 0);
 	word.setFontSize(100, 50);
+	start = SDL_GetTicks();
 	while (!quite)
 	{
 		while (SDL_PollEvent(&e))
