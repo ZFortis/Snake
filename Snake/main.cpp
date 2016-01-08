@@ -23,9 +23,11 @@
 π¶ƒ‹5£∫Ã∞≥‘…ﬂ≈ˆµΩ±ﬂ«Ωª·À¿£¨œ‘ æ”Œœ∑ ß∞‹£ª
 */
 /*620*460*/
+
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HIGHT = 480;
 const int SNAKE_NODE_SIZE = 10;
+
 int main(int argc, char* args[])
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -93,17 +95,6 @@ int main(int argc, char* args[])
 		{
 			if (e.type == SDL_QUIT)
 				quite = true;
-
-			/*if (e.type == SDL_KEYDOWN)
-			{
-			if (snake.snake.size() == 3)
-			{
-			if (e.key.keysym.sym == SDLK_RIGHT)
-			{
-			snake.controlSnake(e);
-			break;
-			}
-			}*/
 			if (e.type == SDL_KEYDOWN)
 			{
 				switch (e.key.keysym.sym)
@@ -175,9 +166,18 @@ int main(int argc, char* args[])
 			snake.setDirection();
 			snake.addSnakeNode(sNode);
 			snake.setSnakeLive();
+			SDL_RenderClear(renderer);
+			text = "DEATH";
+			word.renderText(renderer, text, 50);
+			word.setFontPosition(SCREEN_WIDTH / 2 - 50, SCREEN_HIGHT / 2 - 50);
+			word.textureRenderer(renderer);
+			SDL_RenderPresent(renderer);
+			SDL_Delay(2000);
 			score = 0;
 			text = word.changeIntToString(score);
 			text = "Score:  " + text;
+			word.setFontPosition(25, 0);
+
 			word.renderText(renderer, text, 50);
 		}
 		if (score % 100 == 0 && score != 0)
